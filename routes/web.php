@@ -11,6 +11,7 @@
 |
 */
 
+use FFMpeg\FFMpeg;
 use Illuminate\Http\Request;
 use Ramsey\Laravel\OAuth2\Instagram\Facades\Instagram;
 
@@ -29,21 +30,34 @@ Route::get('instalogin', function (){
     $ig->setUser($username, $password);
     $ig->login();
 
-    dd($ig);
+//    dd($ig);
 
     $metadata = [
-        'caption' => 'تست آپلود عکس از داشبورد توی صفحه اینستا گرام',
+        'caption' => 'تست آپلود از داشبورد توی صفحه اینستا گرام',
 //        'location' => $location, // $location must be an instance of Location class
     ];
 
-    $photoFile = "C:\\7.jpg";
+    $videoFile = "C:\\video.mp4";
+    $photoFile = "C:\\image.jpg";
+    $mediaId = "1527404675266099399";
+
+//    $ffmpeg = FFMpeg::create([
+//        'ffmpeg.binaries'  => 'C:\ffmpeg\bin\ffmpeg.exe', // the path to the FFMpeg binary
+//        'ffprobe.binaries' => 'C:\ffmpeg\bin\ffprobe.exe', // the path to the FFProbe binary
+//        'timeout'          => 3600, // the timeout for the underlying process
+//        'ffmpeg.threads'   => 12,   // the number of threads that FFMpeg should use
+//    ]);
+//    $video = $ffmpeg->open($videoFile);
+
 
 // if you want only a caption, you can simply do this:
 //    $metadata = ['caption' => 'My awesome caption'];
 
-    $ig->uploadTimelinePhoto($photoFile, $metadata);
+//    $result = $ig->uploadTimelineVideo($videoFile, $metadata);
+//    $result = $ig->uploadTimelinePhoto($photoFile, $metadata);
+    $result = $ig->deleteMedia($mediaId);
 
-    dd($ig);
+    dd($result);
 });
 
 Route::get('auth/instagram', function (Request $request){
